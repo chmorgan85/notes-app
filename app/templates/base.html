@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<title>Notes</title>
+
+<header>
+    <a href="{{ url_for('notes.index') }}">
+        <h1>Notes</h1>
+    </a>
+    <search>
+        <form>
+            <input type="search" placeholder="Search">
+            <button type="submit">Go</button>
+        </form>
+    </search>
+    <div>
+        {% if g.user %}
+        <a href="{{ url_for('notes.create') }}">New</a>
+        <span>{{ g.user['username'] }}</span>
+        <a href="{{ url_for('auth.logout') }}">Log Out</a>
+        {% else %}
+        <a href="{{ url_for('auth.register') }}">Register</a>
+        <a href="{{ url_for('auth.login') }}">Log In</a>
+        {% endif %}
+    </div>
+
+</header>
+
+<main>
+    {% for message in get_flashed_messages() %}
+    <div>{{ message }}</div>
+    {% endfor %}
+
+    {% block content %}{% endblock %}
+</main>

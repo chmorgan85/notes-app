@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="notes">
+    {% for note in notes %}
+    <div class="note">
+        <div class="note-title">{{ note['title'] }}</div>
+        <div>{{ note['body'] }}</div>
+        <div class="note-actions">
+            <a href="{{ url_for('notes.update', id=note['id']) }}">Edit</a>
+
+            <form action="{{ url_for('notes.delete', id=note['id']) }}" method="post">
+                <input type="submit" value="Delete">
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
