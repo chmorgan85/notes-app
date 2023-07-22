@@ -27,6 +27,26 @@ def index():
     return render_template('notes/index.html', notes=notes)
 
 
+@bp.route('/search', methods=('POST',))
+@login_required
+def search():
+    db = get_db()
+    notes = db.execute(
+        'SELECT *'
+        ' FROM note n'
+        ' WHERE n.author_id = ?',
+        (g.user['id'],)
+    ).fetchall()
+
+    query = request.form['query']
+    results = []
+    for note in notes:
+        if (query.lower() in note['title'].lower()) or (query.lower() in note['body'].lower()):
+            results.append(note)
+    
+    return render_template('notes/index.html', notes=results)
+
+
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
 def create():

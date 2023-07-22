@@ -18,9 +18,9 @@
                 {% if g.user %}
                 <div class="d-flex">
                     <a class="btn btn-primary me-1" href="{{ url_for('notes.create') }}">+</a>
-                    <div class="input-group">
-                        <input type="search" class="form-control" placeholder="Search">
-                        <button class="btn btn-outline-primary">Go</button>
+                    <form method="post" action="{{ url_for('notes.search') }}" class="input-group">
+                        <input type="search" name="query" class="form-control" placeholder="Search">
+                        <input type="submit" class="btn btn-outline-primary" value="Go">
                     </div>
                 </div>
                 {% endif %}
