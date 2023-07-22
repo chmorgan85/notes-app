@@ -1,13 +1,5 @@
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid;
-    margin-bottom: 8px;
-}
-
-h1 {
-    margin: 0;
+main {
+    margin-top: 8px;
 }
 
 #notes {
@@ -17,15 +9,5 @@ h1 {
 }
 
 .note {
-    border: 1px solid;
-    padding: 8px;
-    width: 275px;
-}
-
-.note-title {
-    font-weight: bold;
-}
-
-.note-actions {
-    text-align: right;
+    width: 300px;
 }

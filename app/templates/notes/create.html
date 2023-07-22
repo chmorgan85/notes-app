@@ -1,13 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form method="post">
-    <div>
-        <input name="title" id="title" value="{{ request.form['title'] }}" placeholder="Title" required>
-    </div>
-    <div>
-        <textarea name="body" id="body" placeholder="Body">{{ request.form['body'] }}</textarea>
-    </div>
-    <input type="submit" value="Save">
-</form>
+<div class="d-flex justify-content-center">
+    <form method="post">
+        <h2>New Note</h2>
+        <div class="form-floating">
+            <input name="title" id="title" class="form-control" value="{{ request.form['title'] }}" placeholder="Title" required>
+            <label for="title">Title</label>
+        </div>
+        <div class="form-floating mb-1">
+            <textarea name="body" id="body" class="form-control" placeholder="Body">{{ request.form['body'] }}</textarea>
+            <label for="body">Body</label>
+        </div>
+        <input class="btn btn-primary" type="submit" value="Save">
+    </form>
+</div>
 {% endblock %}

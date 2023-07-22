@@ -1,34 +1,50 @@
 <!DOCTYPE html>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<title>Notes</title>
+<html lang="en" data-bs-theme="dark">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <title>Notes</title>
+    </head>
 
-<header>
-    <a href="{{ url_for('notes.index') }}">
-        <h1>Notes</h1>
-    </a>
-    <search>
-        <form>
-            <input type="search" placeholder="Search">
-            <button type="submit">Go</button>
-        </form>
-    </search>
-    <div>
-        {% if g.user %}
-        <a href="{{ url_for('notes.create') }}">New</a>
-        <span>{{ g.user['username'] }}</span>
-        <a href="{{ url_for('auth.logout') }}">Log Out</a>
-        {% else %}
-        <a href="{{ url_for('auth.register') }}">Register</a>
-        <a href="{{ url_for('auth.login') }}">Log In</a>
-        {% endif %}
-    </div>
+    <body>
+        <header class="navbar border-bottom">
+            <nav class="container">
+                <a class="text-decoration-none" href="{{ url_for('notes.index') }}">
+                    <h1>Notes</h1>
+                </a>
 
-</header>
+                {% if g.user %}
+                <div class="d-flex">
+                    <a class="btn btn-primary me-1" href="{{ url_for('notes.create') }}">+</a>
+                    <div class="input-group">
+                        <input type="search" class="form-control" placeholder="Search">
+                        <button class="btn btn-outline-primary">Go</button>
+                    </div>
+                </div>
+                {% endif %}
 
-<main>
-    {% for message in get_flashed_messages() %}
-    <div>{{ message }}</div>
-    {% endfor %}
+                <div>
+                    {% if g.user %}
+                    <span>{{ g.user['username'] }}</span>
+                    <a class="btn btn-outline-primary" href="{{ url_for('auth.logout') }}">Log Out</a>
+                    {% else %}
+                    <a class="btn btn-outline-primary" href="{{ url_for('auth.register') }}">Register</a>
+                    <a class="btn btn-primary" href="{{ url_for('auth.login') }}">Log In</a>
+                    {% endif %}
+                </div>
+            </nav>
+        </header>
+        
+        <main class="container">
+            {% for message in get_flashed_messages() %}
+            <div>{{ message }}</div>
+            {% endfor %}
+        
+            {% block content %}{% endblock %}
+        </main>
 
-    {% block content %}{% endblock %}
-</main>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    </body>
+</html>
