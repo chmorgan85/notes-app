@@ -12,33 +12,32 @@ from app.db import get_db
 bp = Blueprint('notes', __name__)
 
 
-
-@bp.route('/')
-@login_required
-def index():
+def get_notes():
     db = get_db()
     notes = db.execute(
         'SELECT *'
         ' FROM note n'
-        ' WHERE n.author_id = ?',
+        ' WHERE n.author_id = ?'
+        ' ORDER BY created DESC',
         (g.user['id'],)
     ).fetchall()
-    
+
+    return notes
+
+
+@bp.route('/')
+@login_required
+def index():
+    notes = get_notes()
     return render_template('notes/index.html', notes=notes)
 
 
 @bp.route('/search', methods=('POST',))
 @login_required
 def search():
-    db = get_db()
-    notes = db.execute(
-        'SELECT *'
-        ' FROM note n'
-        ' WHERE n.author_id = ?',
-        (g.user['id'],)
-    ).fetchall()
-
+    notes = get_notes()
     query = request.form['query']
+    
     results = []
     for note in notes:
         if (query.lower() in note['title'].lower()) or (query.lower() in note['body'].lower()):
